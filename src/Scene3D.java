@@ -1,5 +1,6 @@
 /**
- * This code creates JSON scene files for the ggslac library
+ * This code creates JSON flat hierarchy scene files for the ggslac library
+ * https://github.com/ctralie/ggslac
  * @author ctralie
  */
 
@@ -33,7 +34,8 @@ public class Scene3D {
      * @param shape String with JSOn for the shape
      */
     private String getTransformationHierarchy(double tx, double ty, double tz, 
-                                            double rx, double ry, double rz, String shape) {
+                                            double rx, double ry, double rz, 
+                                            double sx, double sy, double sz, String shape) {
         String json = "{\n";
         // Translation
         json += "\"transform\":[1, 0, 0, " + tx + ", 0, 1, 0, " + ty + ", 0, 0, 1, " + tz + ", 0, 0, 0, 1],\n";
@@ -52,9 +54,12 @@ public class Scene3D {
         c = Math.cos(rz*Math.PI/180);
         s = Math.sin(rz*Math.PI/180);
         json += "\"transform\":[" + c + ", " + -s + ", 0, 0, " + s + ", " + c + ", 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],\n";
+        json += "\"children\":[{\n";
+        json += "\"transform\":[" + sx + ", 0, 0, 0, 0, " + sy + ", 0, 0, 0, 0, " + sz + ", 0, 0, 0, 0, 1],\n";
         json += "\"shapes\":[\n";
         json += shape;
         json += "]\n";
+        json += "}]\n"; // End rotation about z
         json += "}]\n"; // End rotation about y
         json += "}]\n"; // End rotation about x
         json += "}]\n"; // End translation
@@ -67,9 +72,9 @@ public class Scene3D {
      * @param cx X center of box
      * @param cy Y center of box
      * @param cz Z center of box
-     * @param length Length of box
-     * @param width Width of box
-     * @param height Height of box
+     * @param xlen Length of box along x-axis
+     * @param ylen Length of box along y-axis
+     * @param zlen Length of box along z-axis
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
@@ -77,22 +82,176 @@ public class Scene3D {
      * @param ry Rotation about y-axis
      * @param rz Rotation about z-axis
      */
-    public void addBox(double cx, double cy, double cz, double length, 
-                       double width, double height, 
+    public void addBox(double cx, double cy, double cz, double xlen, 
+                       double ylen, double zlen, 
                        double r, double g, double b,
                        double rx, double ry, double rz) {
         String boxJSON = "{\"type\":\"box\",\n";
-        boxJSON += "\"length\":" + length + ",\n";
-        boxJSON += "\"width\":" + width + ",\n";
-        boxJSON += "\"height\":" + height + ",\n";
         boxJSON += "\"material\":\"" + getColorString(r, g, b) + "\"}";
-        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, boxJSON));
+        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, xlen, ylen, zlen, boxJSON));
     }
     
+    /**
+     * Add an axis-aligned box to the scene
+     * @param cx X center of box
+     * @param cy Y center of box
+     * @param cz Z center of box
+     * @param length Length of box
+     * @param width Width of box
+     * @param height Height of box
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
     public void addBox(double cx, double cy, double cz, double length,
                         double width, double height,
                         double r, double g, double b) {
         addBox(cx, cy, cz, length, width, height, r, g, b, 0, 0, 0);
+    }
+    
+     /**
+     * Add a cylinder to the scene
+     * @param cx X center of cylinder
+     * @param cy Y center of cylinder
+     * @param cz Z center of cylinder
+     * @param radius Radius of the cylinder
+     * @param height Height of the cylinder
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     * @param rx Rotation about x-axis
+     * @param ry Rotation about y-axis
+     * @param rz Rotation about z-axis
+     * @param sx Scale about x-axis
+     * @param sy Scale about y-axis
+     * @param sz Scale about z-axis
+     */
+    public void addCylinder(double cx, double cy, double cz, double radius, 
+                            double height, double r, double g, double b,
+                            double rx, double ry, double rz,
+                            double sx, double sy, double sz) {
+        String cylinderJSON = "{\"type\":\"cylinder\",\n";
+        cylinderJSON += "\"radius\":" + radius + ",\n";
+        cylinderJSON += "\"height\":" + height + ",\n";
+        cylinderJSON += "\"material\":\"" + getColorString(r, g, b) + "\"}";
+        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, sx, sy, sz, cylinderJSON));
+    }
+    
+     /**
+     * Add an axis-aligned cylinder to the scene
+     * @param cx X center of cylinder
+     * @param cy Y center of cylinder
+     * @param cz Z center of cylinder
+     * @param radius Radius of the cylinder
+     * @param height Height of the cylinder
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
+    public void addCylinder(double cx, double cy, double cz, double radius, 
+                            double height, double r, double g, double b) {
+        addCylinder(cx, cy, cz, radius, height, r, g, b, 0, 0, 0, 1, 1, 1);
+    }
+    
+     /**
+     * Add a cone to the scene
+     * @param cx X center of cone
+     * @param cy Y center of cone
+     * @param cz Z center of cone
+     * @param radius Radius of the cone
+     * @param height Height of the cone
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     * @param rx Rotation about x-axis
+     * @param ry Rotation about y-axis
+     * @param rz Rotation about z-axis
+     * @param sx Scale about x-axis
+     * @param sy Scale about y-axis
+     * @param sz Scale about z-axis
+     */
+    public void addCone(double cx, double cy, double cz, double radius, 
+                            double height, double r, double g, double b,
+                            double rx, double ry, double rz,
+                            double sx, double sy, double sz) {
+        String coneJSON = "{\"type\":\"cone\",\n";
+        coneJSON += "\"radius\":" + radius + ",\n";
+        coneJSON += "\"height\":" + height + ",\n";
+        coneJSON += "\"material\":\"" + getColorString(r, g, b) + "\"}";
+        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, sx, sy, sz, coneJSON));
+    }
+    
+     /**
+     * Add an axis-aligned cone to the scene
+     * @param cx X center of cone
+     * @param cy Y center of cone
+     * @param cz Z center of cone
+     * @param radius Radius of the cone
+     * @param height Height of the cone
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
+    public void addCone(double cx, double cy, double cz, double radius, 
+                            double height, double r, double g, double b) {
+        addCone(cx, cy, cz, radius, height, r, g, b, 0, 0, 0, 1, 1, 1);
+    }
+    
+    /**
+     * Add an ellipsoid to the scene
+     * @param cx X center of ellipsoid
+     * @param cy Y center of ellipsoid
+     * @param cz Z center of ellipsoid
+     * @param radx Semi-axis x radius
+     * @param rady Semi-axis y radius
+     * @param radz Semi-axis z radius
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     * @param rx Rotation about x-axis
+     * @param ry Rotation about y-axis
+     * @param rz Rotation about z-axis
+     */
+    public void addEllipsoid(double cx, double cy, double cz, 
+                            double radx, double rady, double radz,
+                            double r, double g, double b, 
+                            double rx, double ry, double rz) {
+        String ellipsoidJSON = "{\"type\":\"sphere\",\n";
+        ellipsoidJSON += "\"material\":\"" + getColorString(r, g, b) + "\"}";
+        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, radx, rady, radz, ellipsoidJSON));
+    }
+    
+    /**
+     * Add an axis-aligned ellipsoid to the scene
+     * @param cx X center of ellipsoid
+     * @param cy Y center of ellipsoid
+     * @param cz Z center of ellipsoid
+     * @param radx Semi-axis x radius
+     * @param rady Semi-axis y radius
+     * @param radz Semi-axis z radius
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
+    public void addEllipsoid(double cx, double cy, double cz, 
+                            double radx, double rady, double radz,
+                            double r, double g, double b) {
+        addEllipsoid(cx, cy, cz, radx, rady, radz, r, g, b, 0, 0, 0);
+    }
+    
+    /**
+     * Add a sphere to the scene
+     * @param cx X center of the sphere
+     * @param cy Y center of the sphere
+     * @param cz Z center of the sphere
+     * @param radius Radius of the sphere
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
+    public void addSphere(double cx, double cy, double cz, double radius,
+                         double r, double g, double b) {
+        addEllipsoid(cx, cy, cz, radius, radius, radius, r, g, b);
     }
     
     /**
@@ -235,6 +394,11 @@ public class Scene3D {
         return json;
     }
     
+    /**
+     * Save this scene to a file
+     * @param filename Path to which to save file (should end with .json)
+     * @param sceneName Title of the scene to display in the viewer
+     */
     public void saveScene(String filename, String sceneName) {
         String json = "{\n\"name\":\"" + sceneName + "\",\n";
         json += getMaterialsJSON() + ",\n";

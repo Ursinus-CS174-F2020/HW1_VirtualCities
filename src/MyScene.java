@@ -18,13 +18,10 @@ public class MyScene {
         scene.addLight(0, 100, -20, 1, 1, 1);
         
         // Add a large gray box for the ground
-        scene.addBox(0, 0, 0, 1000, 1000, 0.4, 0.5, 0.5, 0.5);
-        
-        for (int x = 0; x < 1000; x += 100) {
-            for (int z = 0; z < 1000; z += 100) {
-                scene.addBox(x, 25, -z, 25, 25, 200, 1, 0, 0, 0, 0, 30);
-            }
-        }
+        scene.addBox(0, -25, 0, 1000, 50, 1000, 0.5, 0.5, 0.5);
+        scene.addEllipsoid(0, 0, -20, 2, 0.5, 0.5, 1, 1, 0, 0, 0, 45);
+        scene.addCone(10, 0, 0, 0.5, 5, 0, 1, 0);
+        scene.addCylinder(-10, 0, 0, 0.5, 5, 0, 1, 0);
         
         scene.saveScene("myscene.json", "Chris's Scene");
     }
