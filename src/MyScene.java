@@ -21,8 +21,8 @@ public class MyScene {
         
         // Add a large gray box for the ground
         scene.addBox(0, -25, 0, 1000, 50, 1000, 0.5, 0.5, 0.5);
-        // Draw a blue cone centered at (4, 0, 0) with radius 0.5 and height 6
-        scene.addCone(4, 0, 0, 0.5, 6, 0, 0, 1);
+        // Draw a cyan sphere with radius 1 centered at (-4, 4, 0)
+        scene.addSphere(-4, 4, 0, 1, 0, 1, 1);
         scene.saveScene("myscene.json", "Chris's Scene");
     }
 }

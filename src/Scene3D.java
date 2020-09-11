@@ -78,9 +78,9 @@ public class Scene3D {
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
-     * @param rx Rotation about x-axis
-     * @param ry Rotation about y-axis
-     * @param rz Rotation about z-axis
+     * @param rx Rotation about x-axis, in degrees
+     * @param ry Rotation about y-axis, in degrees
+     * @param rz Rotation about z-axis, in degrees
      */
     public void addBox(double cx, double cy, double cz, double xlen, 
                        double ylen, double zlen, 
@@ -119,9 +119,9 @@ public class Scene3D {
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
-     * @param rx Rotation about x-axis
-     * @param ry Rotation about y-axis
-     * @param rz Rotation about z-axis
+     * @param rx Rotation about x-axis, in degrees
+     * @param ry Rotation about y-axis, in degrees
+     * @param rz Rotation about z-axis, in degrees
      * @param sx Scale about x-axis
      * @param sy Scale about y-axis
      * @param sz Scale about z-axis
@@ -163,9 +163,9 @@ public class Scene3D {
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
-     * @param rx Rotation about x-axis
-     * @param ry Rotation about y-axis
-     * @param rz Rotation about z-axis
+     * @param rx Rotation about x-axis, in degrees
+     * @param ry Rotation about y-axis, in degrees
+     * @param rz Rotation about z-axis, in degrees
      * @param sx Scale about x-axis
      * @param sy Scale about y-axis
      * @param sz Scale about z-axis
@@ -208,9 +208,9 @@ public class Scene3D {
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
-     * @param rx Rotation about x-axis
-     * @param ry Rotation about y-axis
-     * @param rz Rotation about z-axis
+     * @param rx Rotation about x-axis, in degrees
+     * @param ry Rotation about y-axis, in degrees
+     * @param rz Rotation about z-axis, in degrees
      */
     public void addEllipsoid(double cx, double cy, double cz, 
                             double radx, double rady, double radz,
