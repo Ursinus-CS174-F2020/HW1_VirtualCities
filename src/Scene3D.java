@@ -96,17 +96,17 @@ public class Scene3D {
      * @param cx X center of box
      * @param cy Y center of box
      * @param cz Z center of box
-     * @param length Length of box
-     * @param width Width of box
-     * @param height Height of box
+     * @param xlen Length of box along x-axis
+     * @param ylen Length of box along y-axis
+     * @param zlen Length of box along z-axis
      * @param r Red component in [0, 1]
      * @param g Green component in [0, 1]
      * @param b Blue component in [0, 1]
      */
-    public void addBox(double cx, double cy, double cz, double length,
-                        double width, double height,
+    public void addBox(double cx, double cy, double cz,
+                        double xlen, double ylen, double zlen,
                         double r, double g, double b) {
-        addBox(cx, cy, cz, length, width, height, r, g, b, 0, 0, 0);
+        addBox(cx, cy, cz, xlen, ylen, zlen, r, g, b, 0, 0, 0);
     }
     
      /**

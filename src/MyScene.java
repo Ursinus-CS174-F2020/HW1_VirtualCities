@@ -15,14 +15,14 @@ public class MyScene {
         Scene3D scene = new Scene3D();
         scene.addCamera(0, 2, 0, 0);
         scene.addLight(0, 100, 0, 1, 1, 1);
-        scene.addLight(0, 100, -20, 1, 1, 1);
+        scene.addLight(0, -100, 0, 1, 1, 1);
+        scene.addLight(-100, 100, 0, 1, 1, 1);
+        scene.addLight(100, -100, 0, 1, 1, 1);
         
         // Add a large gray box for the ground
         scene.addBox(0, -25, 0, 1000, 50, 1000, 0.5, 0.5, 0.5);
-        scene.addEllipsoid(0, 0, -20, 2, 0.5, 0.5, 1, 1, 0, 0, 0, 45);
-        scene.addCone(10, 0, 0, 0.5, 5, 0, 1, 0);
-        scene.addCylinder(-10, 0, 0, 0.5, 5, 0, 1, 0);
-        
+        // Draw a blue cone centered at (4, 0, 0) with radius 0.5 and height 6
+        scene.addCone(4, 0, 0, 0.5, 6, 0, 0, 1);
         scene.saveScene("myscene.json", "Chris's Scene");
     }
 }
