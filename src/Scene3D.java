@@ -40,20 +40,20 @@ public class Scene3D {
         // Translation
         json += "\"transform\":[1, 0, 0, " + tx + ", 0, 1, 0, " + ty + ", 0, 0, 1, " + tz + ", 0, 0, 0, 1],\n";
         json += "\"children\":[{";
-        // Rotation about x
-        double c = Math.cos(rx*Math.PI/180);
-        double s = Math.sin(rx*Math.PI/180);
-        json += "\"transform\":[1, 0, 0, 0, 0, " + c + ", " + -s + ", 0, 0, " + s + ", " + c + ", 0, 0, 0, 0, 1],\n";
+        // Rotation about z
+        double c = Math.cos(rz*Math.PI/180);
+        double s = Math.sin(rz*Math.PI/180);
+        json += "\"transform\":[" + c + ", " + -s + ", 0, 0, " + s + ", " + c + ", 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],\n";
         json += "\"children\":[{\n";
         // Rotation about y
         c = Math.cos(ry*Math.PI/180);
         s = Math.sin(ry*Math.PI/180);
         json += "\"transform\":[" + c + ", 0, " + s + ", 0, 0, 1, 0, 0, " + -s + ", 0, " + c + ", 0, 0, 0, 0, 1],\n";
         json += "\"children\":[{\n";
-        // Rotation about z
-        c = Math.cos(rz*Math.PI/180);
-        s = Math.sin(rz*Math.PI/180);
-        json += "\"transform\":[" + c + ", " + -s + ", 0, 0, " + s + ", " + c + ", 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],\n";
+        // Rotation about x
+        c = Math.cos(rx*Math.PI/180);
+        s = Math.sin(rx*Math.PI/180);
+        json += "\"transform\":[1, 0, 0, 0, 0, " + c + ", " + -s + ", 0, 0, " + s + ", " + c + ", 0, 0, 0, 0, 1],\n";
         json += "\"children\":[{\n";
         json += "\"transform\":[" + sx + ", 0, 0, 0, 0, " + sy + ", 0, 0, 0, 0, " + sz + ", 0, 0, 0, 0, 1],\n";
         json += "\"shapes\":[\n";
@@ -75,9 +75,9 @@ public class Scene3D {
      * @param xlen Length of box along x-axis
      * @param ylen Length of box along y-axis
      * @param zlen Length of box along z-axis
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      * @param rx Rotation about x-axis, in degrees
      * @param ry Rotation about y-axis, in degrees
      * @param rz Rotation about z-axis, in degrees
@@ -99,9 +99,9 @@ public class Scene3D {
      * @param xlen Length of box along x-axis
      * @param ylen Length of box along y-axis
      * @param zlen Length of box along z-axis
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      */
     public void addBox(double cx, double cy, double cz,
                         double xlen, double ylen, double zlen,
@@ -116,9 +116,9 @@ public class Scene3D {
      * @param cz Z center of cylinder
      * @param radius Radius of the cylinder
      * @param height Height of the cylinder
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      * @param rx Rotation about x-axis, in degrees
      * @param ry Rotation about y-axis, in degrees
      * @param rz Rotation about z-axis, in degrees
@@ -144,9 +144,9 @@ public class Scene3D {
      * @param cz Z center of cylinder
      * @param radius Radius of the cylinder
      * @param height Height of the cylinder
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      */
     public void addCylinder(double cx, double cy, double cz, double radius, 
                             double height, double r, double g, double b) {
@@ -160,9 +160,9 @@ public class Scene3D {
      * @param cz Z center of cone
      * @param radius Radius of the cone
      * @param height Height of the cone
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      * @param rx Rotation about x-axis, in degrees
      * @param ry Rotation about y-axis, in degrees
      * @param rz Rotation about z-axis, in degrees
@@ -188,9 +188,9 @@ public class Scene3D {
      * @param cz Z center of cone
      * @param radius Radius of the cone
      * @param height Height of the cone
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      */
     public void addCone(double cx, double cy, double cz, double radius, 
                             double height, double r, double g, double b) {
@@ -205,9 +205,9 @@ public class Scene3D {
      * @param radx Semi-axis x radius
      * @param rady Semi-axis y radius
      * @param radz Semi-axis z radius
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      * @param rx Rotation about x-axis, in degrees
      * @param ry Rotation about y-axis, in degrees
      * @param rz Rotation about z-axis, in degrees
@@ -229,9 +229,9 @@ public class Scene3D {
      * @param radx Semi-axis x radius
      * @param rady Semi-axis y radius
      * @param radz Semi-axis z radius
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      */
     public void addEllipsoid(double cx, double cy, double cz, 
                             double radx, double rady, double radz,
@@ -245,9 +245,9 @@ public class Scene3D {
      * @param cy Y center of the sphere
      * @param cz Z center of the sphere
      * @param radius Radius of the sphere
-     * @param r Red component in [0, 1]
-     * @param g Green component in [0, 1]
-     * @param b Blue component in [0, 1]
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
      */
     public void addSphere(double cx, double cy, double cz, double radius,
                          double r, double g, double b) {
@@ -257,13 +257,13 @@ public class Scene3D {
     /**
      * Return the material ID of a lambertian material with a particular
      * RGB color sequence
-     * @param r Red component (between 0 and 1)
-     * @param g Green component (between 0 and 1)
-     * @param b Blue component (between 0 and 1)
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component [0, 255]
      * @return A string corresponding to the material
      */
     private String getColorString(double r, double g, double b) {
-        String hash = r + "," + g + "," + b;
+        String hash = (r/255) + "," + (g/255) + "," + (b/255);
         if (!colors.containsKey(hash)) {
             colors.put(hash, colors.size());
         }
@@ -282,6 +282,7 @@ public class Scene3D {
         xyzr[0] = x;
         xyzr[1] = y;
         xyzr[2] = z;
+        xyzr[3] = rot;
         cameras.add(xyzr);
     }
     
@@ -291,9 +292,9 @@ public class Scene3D {
      * @param x X position of light
      * @param y Y position of light
      * @param z Z position of light
-     * @param r Red component of light in [0, 1]
-     * @param g Green component of light in [0, 1]
-     * @param b Blue component of light in [0, 1]
+     * @param r Red component of light in [0, 255]
+     * @param g Green component of light in [0, 255]
+     * @param b Blue component of light in [0, 255]
      */
     public void addLight(double x, double y, double z, double r, double g, double b) {
         double[] light = new double[6];
