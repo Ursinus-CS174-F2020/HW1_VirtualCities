@@ -255,6 +255,34 @@ public class Scene3D {
     }
     
     /**
+     * Add a special mesh to the scene
+     * 
+     * @param meshName Name of the special mesh
+     * @param cx Offset in x
+     * @param cy Offset in y
+     * @param cz Offset in z
+     * @param rx Rotation around x-axis
+     * @param ry Rotation around y-axis
+     * @param rz Rotation around z-axis
+     * @param sx Scale along x-axis
+     * @param sy Scale along y-axis
+     * @param sz Scale along z-axis
+     * @param r Red component in [0, 255]
+     * @param g Green component in [0, 255]
+     * @param b Blue component in [0, 255]
+     */
+    public void addSpecialMesh(String meshName, 
+                               double cx, double cy, double cz, 
+                               double rx, double ry, double rz,
+                               double sx, double sy, double sz,
+                               double r, double g, double b) {
+        String meshJSON = "{\"type\":\"mesh\",\n";
+        meshJSON += "\"material\":\"" + getColorString(r, g, b) + "\",\n";
+        meshJSON += "\"filename\":\"../meshes/" + meshName + ".off\"}";
+        shapesJSON.add(getTransformationHierarchy(cx, cy, cz, rx, ry, rz, sx, sy, sz, meshJSON));
+    }
+    
+    /**
      * Return the material ID of a lambertian material with a particular
      * RGB color sequence
      * @param r Red component in [0, 255]
